@@ -1,3 +1,14 @@
+import os
+import sys
+import warnings
+warnings.filterwarnings("ignore")
+os.environ["HF_HUB_DISABLE_SYMLINKS_WARNING"] = "1"
+os.environ["TOKENIZERS_PARALLELISM"] = "false"
+sys.stderr = open(os.devnull, "w")
+
+
+
+
 from Prompts.Zero_Shot import explain_topic, summarize_material, simplify_concept
 from Prompts.Few_Shots import generate_quiz, categorize_concepts
 from Prompts.COT import solve_problem_cot
@@ -10,10 +21,7 @@ from Prompts.Templates import (
     study_plan_template
 )
 from Chains.Learning_Chain import run_learning_chain
-from Memory.User_Memory import (
-    load_memory, save_memory, update_session,
-    add_topic_studied, add_quiz_score, get_summary
-)
+
 from Memory.Chat_Memory import ChatMemory
 
 from Memory.User_Memory import (
@@ -23,7 +31,9 @@ from Memory.User_Memory import (
 )
 from Agent.Tutor_Agent import run_agent
 
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage 
+
+from RAG.RAG_Chain import ingest_document, ask_document, load_existing_store
 
 
 def print_banner():
@@ -37,6 +47,7 @@ def print_banner():
     print("   [5] Role Prompting     [6] Prompt Templates")
     print("   [7] LangChain Chains   [8] Memory System")
     print("   [9] Agents & Tools     [10] Final Integration")
+    print("   [11] RAG Model         [Document Q&A]")  # ← only add this line
     print("=" * 55)
     print()
 
@@ -67,10 +78,12 @@ def main_menu():
     data = setup_profile(data)
     update_session(data)
     chat = ChatMemory(data["name"], data["topics_studied"])
-    
+    # Load existing RAG store if available
+    if load_existing_store():
+        print("Previous document store loaded — RAG ready.\n")
 
     # Start in-session chat memory
-    chat = ChatMemory(data["name"], data["topics_studied"])
+    #chat = ChatMemory(data["name"], data["topics_studied"])
 
     print("=== AI Academic Tutor ===\n")
     while True:
@@ -90,8 +103,10 @@ def main_menu():
         print("13. Chat with tutor (remembers conversation)")
         print("14. View my learning profile")
         print("15. Ask the AI Agent (uses tools automatically)")
-        print("16. Exit")
-        choice = input("\nEnter choice (1-16): ").strip()
+        print("16. Upload document for Q&A (RAG)")
+        print("17. Ask question about uploaded document")
+        print("18. Exit")
+        choice = input("\nEnter choice (1-18): ").strip()
 
         if choice == "1":
             topic = input("Enter the topic: ")
@@ -260,12 +275,31 @@ def main_menu():
                 agent_history.append(HumanMessage(content=user_input))
                 agent_history.append(AIMessage(content=response))
 
+       
         elif choice == "16":
+            print("\n--- Document Upload (RAG) ---")
+            print("Supported formats: .pdf, .txt")
+            file_path = input("Enter full file path: ").strip()
+            # Remove quotes if user copied path with quotes
+            file_path = file_path.strip('"').strip("'")
+            try:
+                ingest_document(file_path)
+            except FileNotFoundError as e:
+                print(f"Error: {e}")
+            except Exception as e:
+                print(f"Error loading document: {e}")
+
+        elif choice == "17":
+            question = input("Ask a question about your document: ")
+            print("\nSearching document...\n")
+            print(ask_document(question))
+
+        elif choice == "18":
             print(f"Goodbye {data['name']}! Keep studying. 📚")
             break
 
         else:
-            print("Invalid choice, try again.\n")
+                print("Invalid choice, try again.\n")
 
         print("\n" + "-" * 50 + "\n")
 

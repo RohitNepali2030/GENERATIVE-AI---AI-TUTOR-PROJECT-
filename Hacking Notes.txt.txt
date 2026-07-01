@@ -1,0 +1,45 @@
+ETHICAL HACKING AND CYBERSECURITY NOTES
+
+Definition of Hacking:
+Hacking refers to the practice of exploiting weaknesses in computer systems or networks to gain unauthorized access. Ethical hacking is the legal practice of attempting to penetrate systems with permission to find vulnerabilities before malicious hackers do.
+
+Types of Hackers:
+White Hat Hackers are ethical hackers who hack systems with permission to find and fix security vulnerabilities. They work for organizations to improve security.
+Black Hat Hackers are malicious hackers who break into systems without permission for personal gain, data theft, or to cause damage.
+Grey Hat Hackers fall between white and black hat hackers. They may hack without permission but do not have malicious intent and often report vulnerabilities after finding them.
+
+Common Hacking Techniques:
+Phishing is a social engineering attack where hackers send fake emails or messages pretending to be trustworthy sources to steal sensitive information like passwords and credit card numbers.
+SQL Injection is an attack where malicious SQL code is inserted into a database query to manipulate the database and gain unauthorized access to data.
+Man in the Middle Attack occurs when a hacker secretly intercepts and relays communication between two parties who believe they are communicating directly with each other.
+DDoS Attack stands for Distributed Denial of Service. It overwhelms a server with massive amounts of traffic from multiple sources making it unavailable to legitimate users.
+Brute Force Attack involves trying every possible combination of passwords until the correct one is found. It is time consuming but effective against weak passwords.
+Keylogging is the practice of recording keystrokes made by a user to capture sensitive information like passwords and credit card numbers without their knowledge.
+
+Common Hacking Tools:
+Nmap is a network scanning tool used to discover hosts and services on a computer network.
+Metasploit is a penetration testing framework that helps security professionals find and exploit vulnerabilities in systems.
+Wireshark is a network protocol analyzer used to capture and analyze network traffic in real time.
+John the Ripper is a password cracking tool used to detect weak passwords in a system.
+
+Cybersecurity Best Practices:
+Always use strong passwords with a combination of letters numbers and special characters.
+Enable two factor authentication on all important accounts.
+Keep software and operating systems updated to patch known vulnerabilities.
+Never click on suspicious links or download attachments from unknown sources.
+Use a VPN when connecting to public WiFi networks.
+Regularly back up important data to prevent loss from ransomware attacks.
+
+Phases of Ethical Hacking:
+Phase 1 is Reconnaissance where the hacker gathers information about the target system.
+Phase 2 is Scanning where the hacker identifies open ports and vulnerabilities.
+Phase 3 is Gaining Access where the hacker exploits vulnerabilities to enter the system.
+Phase 4 is Maintaining Access where the hacker installs backdoors to keep access.
+Phase 5 is Clearing Tracks where the hacker removes evidence of the attack.
+
+Common Cybersecurity Terms:
+Firewall is a network security system that monitors and controls incoming and outgoing network traffic.
+VPN stands for Virtual Private Network which encrypts internet traffic and hides the user identity online.
+Malware is malicious software designed to damage or gain unauthorized access to computer systems including viruses trojans and ransomware.
+Ransomware is a type of malware that encrypts the victim files and demands payment for the decryption key.
+Zero Day Vulnerability is a software vulnerability that is unknown to the vendor and has no available patch making it extremely dangerous.
