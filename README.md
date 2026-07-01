@@ -26,6 +26,7 @@ documents using RAG (Retrieval Augmented Generation).
 
 ## Project Structure
 
+```
 AI TUTOR PROJECT/
 ├── Main.py                  # Console menu — entry point
 ├── Config.py                # LLM setup and model fallback
@@ -52,9 +53,10 @@ AI TUTOR PROJECT/
 │   └── Tutor_Agent.py       # Step 9: Tool-calling Agent
 │
 └── RAG/
-├── Document_Loader.py   # Step 11: PDF/TXT document loading
-├── Vector_Store.py      # Step 11: FAISS vector storage
-└── RAG_Chain.py         # Step 11: Retrieval + generation chain
+    ├── Document_Loader.py   # Step 11: PDF/TXT document loading
+    ├── Vector_Store.py      # Step 11: FAISS vector storage
+    └── RAG_Chain.py         # Step 11: Retrieval + generation chain
+```
 
 ---
 
