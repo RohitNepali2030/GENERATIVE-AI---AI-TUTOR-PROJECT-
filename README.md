@@ -156,4 +156,3 @@ Answer is grounded in YOUR documents, not just general knowledge
 - User profile is saved in `Memory/user_data.json`
 - Embedding model runs fully locally — no extra API key needed
 - Supported document formats: PDF (.pdf) and Text (.txt)  
-
