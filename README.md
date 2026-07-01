@@ -124,7 +124,7 @@ Answer is grounded in YOUR documents, not just general knowledge
 ---
 
 ## Menu Options
-
+```
 1. Explain a topic
 2. Summarize study material
 3. Simplify a complex concept
@@ -143,7 +143,7 @@ Answer is grounded in YOUR documents, not just general knowledge
 16. Upload document for Q&A (RAG) 
 17. Ask question about uploaded document 
 18. Exit  
-
+```
 ---
 
 ## Notes
