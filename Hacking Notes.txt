@@ -17,7 +17,7 @@ Brute Force Attack involves trying every possible combination of passwords until
 Keylogging is the practice of recording keystrokes made by a user to capture sensitive information like passwords and credit card numbers without their knowledge.
 
 Common Hacking Tools:
-Nmap is a network scanning tool used to discover hosts and services on a computer network.
+Nmap is a network scanning tool used to discover hosts and swhaervices on a computer network.
 Metasploit is a penetration testing framework that helps security professionals find and exploit vulnerabilities in systems.
 Wireshark is a network protocol analyzer used to capture and analyze network traffic in real time.
 John the Ripper is a password cracking tool used to detect weak passwords in a system.

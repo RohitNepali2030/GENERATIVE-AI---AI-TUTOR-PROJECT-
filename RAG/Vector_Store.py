@@ -16,7 +16,10 @@ VECTOR_STORE_PATH = "rag/vector_store.pkl"
 
 # Load embedding model — runs locally, no API needed
 # print("Loading embedding model (first time may take a moment)...")
-embedding_model = SentenceTransformer("all-MiniLM-L6-v2")
+embedding_model = SentenceTransformer(
+    "all-MiniLM-L6-v2",
+    local_files_only=True
+)
 
 
 def build_vector_store(chunks: list) -> dict:

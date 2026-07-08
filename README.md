@@ -6,17 +6,20 @@ Pokhara University — Computer Engineering — Generative AI Project
 
 ## Project Overview
 A console-based AI academic tutor built with Python, LangChain, and the
-Google Gemini API. The system simulates a personalized tutor capable of
-explaining concepts, generating quizzes, solving problems step-by-step,
-maintaining memory across sessions, and answering questions from uploaded
-documents using RAG (Retrieval Augmented Generation).
+Google Gemini API (online) or Ollama (offline). The system simulates a
+personalized tutor capable of explaining concepts, generating quizzes,
+solving problems step-by-step, maintaining memory across sessions, and
+answering questions from uploaded documents using RAG (Retrieval Augmented
+Generation). Supports both **online mode** (Gemini API) and **offline mode**
+(Ollama local models).
 
 ---
 
 ## Tech Stack
 - Python 3.10+
 - LangChain + LangChain Google GenAI
-- Google Gemini API (Free Tier)
+- Google Gemini API (Free Tier) — online mode
+- Ollama + gemma:2b — offline mode
 - FAISS (Vector Store)
 - Sentence Transformers (Local Embeddings)
 - PyPDF (PDF Reading)
@@ -29,7 +32,7 @@ documents using RAG (Retrieval Augmented Generation).
 ```
 AI TUTOR PROJECT/
 ├── Main.py                  # Console menu — entry point
-├── Config.py                # LLM setup and model fallback
+├── Config.py                # LLM setup, model fallback, mode switching
 ├── .env                     # API key (not committed to git)
 ├── README.md                # Project documentation
 │
@@ -74,18 +77,48 @@ venv\Scripts\Activate.ps1   # Windows
 ```bash
 pip install langchain langchain-google-genai langchain-core python-dotenv
 pip install langchain-community faiss-cpu pypdf sentence-transformers
+pip install langchain-ollama
 ```
 
 ### 4. Add your API key
 Create a `.env` file in the project root:
+```
 GOOGLE_API_KEY=your_gemini_api_key_here
-
+```
 Get a free key at: https://aistudio.google.com/apikey
 
-### 5. Run the app
+### 5. Choose your mode
+Open `Config.py` and set the MODE variable:
+```python
+MODE = "gemini"   # online  — requires internet + API key
+MODE = "ollama"   # offline — requires Ollama installed locally
+```
+
+### 6. (Optional) Setup Ollama for offline mode
+- Download and install Ollama from: https://ollama.com
+- Pull the model:
+```bash
+ollama pull gemma:2b
+```
+- Ollama starts automatically on Windows — no need to run `ollama serve` manually
+
+### 7. Run the app
 ```bash
 python Main.py
 ```
+
+---
+
+## Online vs Offline Mode
+
+| | Gemini (Online) | Ollama (Offline) |
+|---|---|---|
+| Set in Config.py | `MODE = "gemini"` | `MODE = "ollama"` |
+| Internet required | Yes | No |
+| Speed | Fast | Slower |
+| Quality | High | Medium |
+| Quota limits | Yes (daily) | No limits |
+| API key needed | Yes | No |
 
 ---
 
@@ -93,7 +126,7 @@ python Main.py
 
 | Step | Feature | Description |
 |------|---------|-------------|
-| 1 | LLM Integration | Connects to Gemini API, maintains session history |
+| 1 | LLM Integration | Connects to Gemini API or Ollama, maintains session history |
 | 2 | Zero-Shot Prompting | Explains topics, summarizes material, simplifies concepts |
 | 3 | Few-Shot Prompting | Generates formatted quizzes and categorizes topics |
 | 4 | Chain-of-Thought | Solves problems step-by-step with visible reasoning |
@@ -109,50 +142,53 @@ python Main.py
 
 ## How RAG Works
 
+```
 Student uploads a PDF or TXT file (e.g. lecture notes)
-↓
+        ↓
 RAG splits it into chunks and stores them as vectors (FAISS)
-↓
+        ↓
 Student asks a question
-↓
+        ↓
 RAG finds the most relevant chunks using semantic search
-↓
-Gemini answers using those chunks as context
-↓
+        ↓
+Gemini or Ollama answers using those chunks as context
+        ↓
 Answer is grounded in YOUR documents, not just general knowledge
+```
 
 ---
 
 ## Menu Options
 
 ```
-
-1. Explain a topic
-2. Summarize study material
-3. Simplify a complex concept
-4. Generate a quiz
-5. Categorize topics by difficulty
-6. Solve a problem step-by-step
-7. Ask a role-based tutor
-8. Explain topic (Template)
-9. Generate quiz (Template)
+1.  Explain a topic
+2.  Summarize study material
+3.  Simplify a complex concept
+4.  Generate a quiz
+5.  Categorize topics by difficulty
+6.  Solve a problem step-by-step
+7.  Ask a role-based tutor
+8.  Explain topic (Template)
+9.  Generate quiz (Template)
 10. Get revision notes (Template)
 11. Create a study plan (Template)
 12. Full learning chain (Topic → Explanation → Notes → Quiz)
-13. Chat with tutor (remembers conversation) 
-14. View my learning profile 
-15. Ask the AI Agent (uses tools automatically) 
-16. Upload document for Q&A (RAG) 
-17. Ask question about uploaded document 
-18. Exit  
-
+13. Chat with tutor (remembers conversation)
+14. View my learning profile
+15. Ask the AI Agent (uses tools automatically)
+16. Upload document for Q&A (RAG)
+17. Ask question about uploaded document
+18. Exit
 ```
+
 ---
 
 ## Notes
 - Free tier quota resets daily at 1:15 PM Nepal Time (NPT)
-- Model fallback order: gemini-3.1-flash-lite → gemini-3-flash →
+- Gemini model fallback order: gemini-3.1-flash-lite → gemini-3-flash →
   gemini-2.5-flash-lite → gemini-2.5-flash
+- Ollama model: gemma:2b (runs locally on GPU/CPU)
 - User profile is saved in `Memory/user_data.json`
-- Embedding model runs fully locally — no extra API key needed
-- Supported document formats: PDF (.pdf) and Text (.txt)  
+- Embedding model runs fully locally — no internet needed for RAG search
+- Supported document formats: PDF (.pdf) and Text (.txt)
+- Switch between online/offline by changing `MODE` in `Config.py`
