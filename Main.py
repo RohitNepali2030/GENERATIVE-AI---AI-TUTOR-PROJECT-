@@ -71,6 +71,43 @@ def setup_profile(data: dict) -> dict:
         print()
     return data
 
+def select_document() -> str:
+    """Open a file picker dialog to select a document."""
+    try:
+        import tkinter as tk
+        from tkinter import filedialog
+
+        # Hide the main tkinter window
+        root = tk.Tk()
+        root.withdraw()
+        root.attributes("-topmost", True)
+
+        # Open file picker dialog
+        file_path = filedialog.askopenfilename(
+            title="Select a document to upload",
+            filetypes=[
+                ("Supported files", "*.pdf *.txt"),
+                ("PDF files", "*.pdf"),
+                ("Text files", "*.txt"),
+                ("All files", "*.*")
+            ]
+        )
+
+        root.destroy()
+
+        if file_path:
+            print(f"\nSelected: {os.path.basename(file_path)}")
+            return file_path
+        else:
+            print("\nNo file selected.")
+            return ""
+
+    except Exception as e:
+        # Fallback to manual path if tkinter fails
+        print(f"File picker unavailable: {e}")
+        path = input("Enter full file path manually: ").strip()
+        return path.strip('"').strip("'")
+
 
 def main_menu():
     print_banner()
@@ -277,17 +314,19 @@ def main_menu():
 
        
         elif choice == "16":
-            print("\n--- Document Upload (RAG) ---")
-            print("Supported formats: .pdf, .txt")
-            file_path = input("Enter full file path: ").strip()
-            # Remove quotes if user copied path with quotes
-            file_path = file_path.strip('"').strip("'")
-            try:
-                ingest_document(file_path)
-            except FileNotFoundError as e:
-                print(f"Error: {e}")
-            except Exception as e:
-                print(f"Error loading document: {e}")
+                print("\n--- Document Upload (RAG) ---")
+                print("Supported formats: .pdf, .txt")
+                print("Tip: Drop your files into the 'documents' folder for easy selection.")
+                file_path = select_document()
+                if not file_path:
+                    print("No file selected.")
+                else:
+                    try:
+                        ingest_document(file_path)
+                    except FileNotFoundError as e:
+                        print(f"Error: {e}")
+                    except Exception as e:
+                        print(f"Error loading document: {e}")
 
         elif choice == "17":
             question = input("Ask a question about your document: ")

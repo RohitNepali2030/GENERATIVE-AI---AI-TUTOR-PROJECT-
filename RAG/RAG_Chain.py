@@ -32,7 +32,9 @@ def ask_document(question: str) -> str:
         return "No document loaded. Please upload a document first (option 17)."
 
     # Step 1: Find relevant chunks
-    relevant_chunks = search_vector_store(_store, question, top_k=3)
+    # relevant_chunks = search_vector_store(_store, question, top_k=3)
+
+    relevant_chunks = search_vector_store(_store, question, top_k=5)
 
     if not relevant_chunks:
         return "Could not find relevant information in the document."
